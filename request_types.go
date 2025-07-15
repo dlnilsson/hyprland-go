@@ -3,6 +3,7 @@ package hyprland
 import (
 	"errors"
 	"net"
+	"strconv"
 )
 
 // Indicates the version where the structs are up-to-date.
@@ -172,9 +173,23 @@ type Monitor struct {
 
 type Option struct {
 	Option string  `json:"option"`
+	Custom string  `json:"custom"`
 	Int    int     `json:"int"`
 	Float  float64 `json:"float"`
 	Set    bool    `json:"set"`
+}
+
+func (o Option) String() string {
+	if !o.Set {
+		return ""
+	}
+	if o.Custom != "" {
+		return o.Custom
+	}
+	if o.Float != 0 {
+		return strconv.FormatFloat(o.Float, 'f', -1, 64)
+	}
+	return strconv.Itoa(o.Int)
 }
 
 type Version struct {
