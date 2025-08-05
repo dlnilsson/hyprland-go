@@ -66,6 +66,8 @@ type EventHandler interface {
 	// Screencast is fired when the screencopy state of a client changes.
 	// Keep in mind there might be multiple separate clients.
 	Screencast(s Screencast)
+
+	ToggleGroup(t ToggleGroup)
 }
 
 const (
@@ -86,6 +88,11 @@ const (
 	EventCloseLayer       EventType = "closelayer"
 	EventSubMap           EventType = "submap"
 	EventScreencast       EventType = "screencast"
+	EventToggleGroup      EventType = "togglegroup"
+	EventMoveIntogroup    EventType = "moveintogroup"
+	EventMoveOutofGroup   EventType = "moveoutofgroup"
+	EventIgnoreGroupLock  EventType = "ignoregrouplock"
+	EventLockGroups       EventType = "lockgroups"
 )
 
 // AllEvents is the combination of all event types, useful if you want to
@@ -110,6 +117,11 @@ var AllEvents = []EventType{
 	EventCloseLayer,
 	EventSubMap,
 	EventScreencast,
+	EventToggleGroup,
+	EventMoveIntogroup,
+	EventMoveOutofGroup,
+	EventIgnoreGroupLock,
+	EventLockGroups,
 }
 
 type MoveWorkspace struct {
@@ -164,4 +176,9 @@ type Screencast struct {
 
 	// "0" if monitor is shared, "1" if window is shared.
 	Owner string
+}
+
+type ToggleGroup struct {
+	Toggle  bool
+	Address string
 }

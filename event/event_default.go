@@ -22,3 +22,4 @@ func (e *DefaultEventHandler) OpenLayer(OpenLayer)            {}
 func (e *DefaultEventHandler) CloseLayer(CloseLayer)          {}
 func (e *DefaultEventHandler) SubMap(SubMap)                  {}
 func (e *DefaultEventHandler) Screencast(Screencast)          {}
+func (e *DefaultEventHandler) ToggleGroup(ToggleGroup)        {}

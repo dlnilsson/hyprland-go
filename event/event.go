@@ -223,6 +223,11 @@ func processEvent(ev EventHandler, msg ReceivedData, events []EventType) {
 					Sharing: raw[0] == "1",
 					Owner:   raw[1],
 				})
+			case EventToggleGroup:
+				ev.ToggleGroup(ToggleGroup{
+					Toggle:  raw[0] == "1",
+					Address: raw[1],
+				})
 			}
 		}
 	}
