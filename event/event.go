@@ -145,7 +145,6 @@ func receiveAndProcessEvent(ctx context.Context, c eventClient, ev EventHandler,
 func processEvent(ev EventHandler, msg ReceivedData, events []EventType) {
 	for _, event := range events {
 		raw := strings.Split(string(msg.Data), ",")
-
 		if msg.Type == event {
 			switch event {
 			case EventWorkspace:
@@ -157,7 +156,7 @@ func processEvent(ev EventHandler, msg ReceivedData, events []EventType) {
 					MonitorName:   MonitorName(raw[0]),
 					WorkspaceName: WorkspaceName(raw[1]),
 				})
-			case EventActiveWindow:
+			case EventActiveWindowV2, EventActiveWindow:
 				// e.g. nvim,nvim event/event.go
 				ev.ActiveWindow(ActiveWindow{
 					Name:  raw[0],
@@ -227,6 +226,14 @@ func processEvent(ev EventHandler, msg ReceivedData, events []EventType) {
 				ev.ToggleGroup(ToggleGroup{
 					Toggle:  raw[0] == "1",
 					Address: raw[1],
+				})
+			case EventMoveOutofGroup:
+				ev.MoveOutofGroup(MoveOutofGroup{
+					Address: raw[0],
+				})
+			case EventMoveIntogroup:
+				ev.MoveIntogroup(MoveIntogroup{
+					Address: raw[0],
 				})
 			}
 		}

@@ -66,14 +66,19 @@ type EventHandler interface {
 	// Screencast is fired when the screencopy state of a client changes.
 	// Keep in mind there might be multiple separate clients.
 	Screencast(s Screencast)
-
+	// ToggleGroup emitted when a group is toggled.
 	ToggleGroup(t ToggleGroup)
+	// MoveIntogroup emitted when a window is moved into a group.
+	MoveIntogroup(m MoveIntogroup)
+	// MoveOutofGroup emitted when a window is moved out of a group.
+	MoveOutofGroup(m MoveOutofGroup)
 }
 
 const (
 	EventWorkspace        EventType = "workspace"
 	EventFocusedMonitor   EventType = "focusedmon"
 	EventActiveWindow     EventType = "activewindow"
+	EventActiveWindowV2   EventType = "activewindowv2"
 	EventFullscreen       EventType = "fullscreen"
 	EventMonitorRemoved   EventType = "monitorremoved"
 	EventMonitorAdded     EventType = "monitoradded"
@@ -122,6 +127,7 @@ var AllEvents = []EventType{
 	EventMoveOutofGroup,
 	EventIgnoreGroupLock,
 	EventLockGroups,
+	EventActiveWindowV2,
 }
 
 type MoveWorkspace struct {
@@ -180,5 +186,13 @@ type Screencast struct {
 
 type ToggleGroup struct {
 	Toggle  bool
+	Address string
+}
+
+type MoveIntogroup struct {
+	Address string
+}
+
+type MoveOutofGroup struct {
 	Address string
 }

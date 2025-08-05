@@ -23,3 +23,5 @@ func (e *DefaultEventHandler) CloseLayer(CloseLayer)          {}
 func (e *DefaultEventHandler) SubMap(SubMap)                  {}
 func (e *DefaultEventHandler) Screencast(Screencast)          {}
 func (e *DefaultEventHandler) ToggleGroup(ToggleGroup)        {}
+func (e *DefaultEventHandler) MoveOutofGroup(MoveOutofGroup)  {}
+func (e *DefaultEventHandler) MoveIntogroup(MoveIntogroup)    {}
