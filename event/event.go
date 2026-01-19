@@ -156,8 +156,7 @@ func processEvent(ev EventHandler, msg ReceivedData, events []EventType) {
 					MonitorName:   MonitorName(raw[0]),
 					WorkspaceName: WorkspaceName(raw[1]),
 				})
-			case EventActiveWindowV2, EventActiveWindow:
-				// e.g. nvim,nvim event/event.go
+			case EventActiveWindow:
 				ev.ActiveWindow(ActiveWindow{
 					Name:  raw[0],
 					Title: raw[1],
@@ -233,6 +232,109 @@ func processEvent(ev EventHandler, msg ReceivedData, events []EventType) {
 				})
 			case EventMoveIntogroup:
 				ev.MoveIntogroup(MoveIntogroup{
+					Address: raw[0],
+				})
+			case EventIgnoreGroupLock:
+				ev.IgnoreGroupLock(raw[0] == "1")
+			case EventLockGroups:
+				ev.LockGroups(raw[0] == "1")
+			case EventActiveWindowV2:
+				ev.ActiveWindow(ActiveWindow{
+					Name:  raw[0],
+					Title: "",
+				})
+			case EventWorkspaceV2:
+				ev.WorkspaceV2(WorkspaceV2{
+					ID:   raw[0],
+					Name: WorkspaceName(raw[1]),
+				})
+			case EventFocusedMonitorV2:
+				ev.FocusedMonitorV2(FocusedMonitorV2{
+					MonitorName: MonitorName(raw[0]),
+					WorkspaceID: raw[1],
+				})
+			case EventMonitorRemovedV2:
+				ev.MonitorRemovedV2(MonitorRemovedV2{
+					ID:          raw[0],
+					Name:        MonitorName(raw[1]),
+					Description: raw[2],
+				})
+			case EventMonitorAddedV2:
+				ev.MonitorAddedV2(MonitorAddedV2{
+					ID:          raw[0],
+					Name:        MonitorName(raw[1]),
+					Description: raw[2],
+				})
+			case EventCreateWorkspaceV2:
+				ev.CreateWorkspaceV2(CreateWorkspaceV2{
+					ID:   raw[0],
+					Name: WorkspaceName(raw[1]),
+				})
+			case EventDestroyWorkspaceV2:
+				ev.DestroyWorkspaceV2(DestroyWorkspaceV2{
+					ID:   raw[0],
+					Name: WorkspaceName(raw[1]),
+				})
+			case EventMoveWorkspaceV2:
+				ev.MoveWorkspaceV2(MoveWorkspaceV2{
+					ID:          raw[0],
+					Name:        WorkspaceName(raw[1]),
+					MonitorName: MonitorName(raw[2]),
+				})
+			case EventRenameWorkspace:
+				ev.RenameWorkspace(RenameWorkspace{
+					ID:      raw[0],
+					NewName: WorkspaceName(raw[1]),
+				})
+			case EventActiveSpecial:
+				ev.ActiveSpecial(ActiveSpecial{
+					Name:        WorkspaceName(raw[0]),
+					MonitorName: MonitorName(raw[1]),
+				})
+			case EventActiveSpecialV2:
+				ev.ActiveSpecialV2(ActiveSpecialV2{
+					ID:          raw[0],
+					Name:        WorkspaceName(raw[1]),
+					MonitorName: MonitorName(raw[2]),
+				})
+			case EventMoveWindowV2:
+				ev.MoveWindowV2(MoveWindowV2{
+					Address:       raw[0],
+					WorkspaceID:   raw[1],
+					WorkspaceName: WorkspaceName(raw[2]),
+				})
+			case EventChangeFloatingMode:
+				ev.ChangeFloatingMode(ChangeFloatingMode{
+					Address:  raw[0],
+					Floating: raw[1] == "1",
+				})
+			case EventUrgent:
+				ev.Urgent(Urgent{
+					Address: raw[0],
+				})
+			case EventWindowTitle:
+				ev.WindowTitle(WindowTitle{
+					Address: raw[0],
+				})
+			case EventWindowTitleV2:
+				ev.WindowTitleV2(WindowTitleV2{
+					Address: raw[0],
+					Title:   raw[1],
+				})
+			case EventConfigReloaded:
+				ev.ConfigReloaded()
+			case EventPin:
+				ev.Pin(Pin{
+					Address: raw[0],
+					Pinned:  raw[1] == "1",
+				})
+			case EventMinimize:
+				ev.Minimize(Minimize{
+					Address:   raw[0],
+					Minimized: raw[1] == "1",
+				})
+			case EventBell:
+				ev.Bell(Bell{
 					Address: raw[0],
 				})
 			}
